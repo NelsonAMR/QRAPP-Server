@@ -10,10 +10,10 @@ import {
 
 const router = Router();
 
-router.get("/employees", validateToken, getEmployees);
-router.get("/employees/:id", validateToken, getEmployeeByID);
-router.post("/employees", validateToken, createEmployee);
-router.delete("/employees/:id", validateToken, deleteEmployee);
-router.put("/employees/:id", validateToken, updateEmployee);
+router.get("/employees", getEmployees);
+router.get("/employees/:id", getEmployeeByID);
+router.post("/employees", createEmployee);
+router.delete("/employees/:id", deleteEmployee);
+router.put("/employees/:id", updateEmployee);
 
 export default router;
