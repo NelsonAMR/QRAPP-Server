@@ -37,8 +37,10 @@ export const createEmployee = async (req, res) => {
       employee_id,
     }).save();
 
+    console.log(newEmployee);
+
     const qr = await createQR(employee_id);
-    await sendQR(qr);
+    await sendQR(qr, email, name);
 
     res.json(newEmployee);
   } catch (error) {

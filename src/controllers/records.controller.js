@@ -1,5 +1,6 @@
 import Record from "../models/record.model.js";
 import Employee from "../models/employee.model.js";
+import axios from "axios";
 import { ESP32_URI } from "../config.js";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -23,12 +24,16 @@ export const createRecord = async (req, res) => {
     const timeoutId = setTimeout(() => controller.abort(), 3000);
 
     const employee = await Employee.findOne({ employee_id });
+
+    console.log(employee);
+
     if (!employee) {
-      await fetch(`${ESP32_URI}/?status=failure`, { signal });
+      console.log("hola 1");
+      await axios(`${ESP32_URI}/?status=failure`, { signal });
 
       return res.status(404).json({ message: "Employee not found" });
     } else {
-      await fetch(`${ESP32_URI}/?status=success`, { signal });
+      await axios(`${ESP32_URI}/?status=success`, { signal });
     }
 
     clearTimeout(timeoutId);
@@ -37,7 +42,10 @@ export const createRecord = async (req, res) => {
       "employee.employee_id": employee_id,
     });
 
+    console.log(record);
+
     if (!record || record.departure.length > 0) {
+      console.log("hola 2");
       const newRecord = await new Record({
         employee: {
           _id: employee._id,
@@ -50,6 +58,7 @@ export const createRecord = async (req, res) => {
       }).save();
 
       if (!newRecord) {
+        console.log("hola 3");
         return res.status(404).json({ message: "Record not found" });
       }
 

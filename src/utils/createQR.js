@@ -15,7 +15,6 @@ const generateQR = async (id) => {
 
   try {
     const qr = await QRCode.toDataURL(id, opts);
-    console.log(qr);
     return qr;
   } catch (error) {
     console.error(error);
